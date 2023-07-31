@@ -105,3 +105,4 @@ eladen-order-service/
 eladen-useridentity-service/
 eladen-api-gateway/
 /eladen-checkout-service/
+/eladen-banking-service/

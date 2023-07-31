@@ -23,6 +23,7 @@ repositories=(
   "https://github.com/ELadenKBE/eladen-useridentity-service"
   "https://github.com/ELadenKBE/eladen-api-gateway"
   "https://github.com/ELadenKBE/eladen-checkout-service"
+  "https://github.com/ELadenKBE/eladen-banking-service"
 )
 
 # Clone repositories
