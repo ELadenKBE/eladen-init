@@ -22,6 +22,7 @@ repositories=(
   "https://github.com/ELadenKBE/eladen-order-service"
   "https://github.com/ELadenKBE/eladen-useridentity-service"
   "https://github.com/ELadenKBE/eladen-api-gateway"
+  "https://github.com/ELadenKBE/eladen-checkout-service"
 )
 
 # Clone repositories
@@ -30,21 +31,8 @@ for repo in "${repositories[@]}"; do
 done
 
 # Execute docker-compose up from the root directory
-cd eladen-product-service || { echo "Failed to change directory to eladen-product-service"; exit 1; }
-cd ..
-
-cd eladen-order-service || { echo "Failed to change directory to eladen-order-service"; exit 1; }
-cd ..
-
-cd eladen-useridentity-service || { echo "Failed to change directory to eladen-useridentity-service"; exit 1; }
-cd ..
-
-cd eladen-api-gateway || { echo "Failed to change directory to eladen-api-gateway"; exit 1; }
-cd ..
-
-# Execute docker-compose up from the root directory
 docker-compose -f docker-compose-services.yaml up -d
-cd keycloak
+cd keycloak || exit
 docker-compose -f docker-compose-keycloak.yaml up -d
 
 echo "All repositories cloned and docker-compose up executed successfully!"

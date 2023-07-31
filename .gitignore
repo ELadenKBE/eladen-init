@@ -98,10 +98,10 @@ dependency-reduced-pom.xml
 *.iml
 *.ipr
 *.iws
-.idea/
 
 # Cloned projects
 eladen-product-service/
 eladen-order-service/
 eladen-useridentity-service/
 eladen-api-gateway/
+/eladen-checkout-service/
