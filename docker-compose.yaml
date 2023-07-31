@@ -1,0 +1,96 @@
+version: "3"
+
+volumes:
+  postgres_data:
+    driver: local
+
+services:
+  gateway:
+    image: eladen-gateway
+    build:
+      context: ./eladen-api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "${GATEWAY_PORT}:${GATEWAY_PORT}"
+    volumes:
+      - ./eladen-api-gateway:/code
+    command: python manage.py runserver 0.0.0.0:${GATEWAY_PORT}
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=${DEBUG}
+      - DEBUG_FALSE=${DEBUG_FALSE}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USERNAME}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+    container_name: eladen-gateway
+
+  postgres:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: ${DB_KEY_CLOACK_USER}
+      POSTGRES_PASSWORD: ${KEYCLOAK_PASSWORD}
+    container_name: postgres-keycloak
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:legacy
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_DATABASE: keycloak
+      DB_USER: ${DB_KEY_CLOACK_USER}
+      DB_SCHEMA: public
+      DB_PASSWORD: ${DB_KEY_CLOACK_PASSWORD}
+      KEYCLOAK_USER: ${KEYCLOAK_USER}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+    ports:
+      - ${KEYCLOAK_PORT}:${KEYCLOAK_PORT}
+    depends_on:
+      - postgres
+    container_name: keycloak
+
+  user-identity:
+    build:
+      context: ./eladen-useridentity-service
+      dockerfile: Dockerfile
+    volumes:
+      - ./eladen-useridentity-service:/code
+    command: python manage.py runserver 0.0.0.0:${UI_PORT}
+    container_name: user-identity
+  
+  product-service:
+    build:
+      context: ./eladen-product-service
+      dockerfile: Dockerfile
+    volumes:
+      - ./eladen-product-service:/code
+    command: python manage.py runserver 0.0.0.0:${PS_PORT}
+    container_name: product-service
+
+  order-service:
+    build:
+      context: ./eladen-order-service
+      dockerfile: Dockerfile
+    volumes:
+      - ./eladen-order-service:/code
+    command: python manage.py runserver 0.0.0.0:${OS_PORT}
+    container_name: order-service
+    environment:
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_USERNAME=${RABBITMQ_USERNAME}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+
+  rabbitmq:
+      image: rabbitmq:management
+      container_name: rabbitmq
+      environment:
+        - RABBITMQ_DEFAULT_USER=${RABBITMQ_USERNAME}
+        - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+      ports:
+        - "5672:5672"
+        - "15672:15672"
+
+networks:
+  default:
+    driver: bridge
