@@ -1,0 +1,107 @@
+# macOS system files
+.DS_Store
+
+# Temporary files
+*.tmp
+
+# Editor/IDE specific files
+.vscode/
+.idea/
+
+# Build output directories
+/build/
+/dist/
+
+# Node.js dependencies
+/node_modules/
+
+# Compiled Python files
+*.pyc
+*.pyo
+__pycache__/
+
+# Compiled Java classes
+*.class
+
+# Compiled C/C++ files
+*.o
+
+# Compiled binaries
+*.exe
+*.out
+
+# Log files
+*.log
+
+# Environment configuration files
+.env
+
+# Package manager files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+pnpm-error.log*
+
+# Editor backup and swap files
+*~
+*#
+
+# OS generated files
+Icon?
+
+# macOS folder attributes
+.AppleDouble
+.AppleDesktop
+.AppleDB
+.AppleDiskImage
+.AppleMetaFile
+.ApplePropBinfo
+.AppleSingle
+
+# Windows thumbnail cache
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Windows Desktop.ini files
+Desktop.ini
+
+# Visual Studio files
+*.suo
+*.pdb
+*.user
+*.aps
+*.bindings
+*.vcxproj*
+*.vcproj
+
+# Gradle files
+.gradle/
+build/
+
+# Maven files
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# Eclipse files
+.settings/
+.classpath
+.project
+
+# IntelliJ IDEA files
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Cloned projects
+eladen-product-service/
+eladen-order-service/
+eladen-useridentity-service/
+eladen-api-gateway/
