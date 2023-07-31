@@ -24,6 +24,7 @@ repositories=(
   "https://github.com/ELadenKBE/eladen-api-gateway"
   "https://github.com/ELadenKBE/eladen-checkout-service"
   "https://github.com/ELadenKBE/eladen-banking-service"
+  "https://github.com/ELadenKBE/eladen-delivery-service"
 )
 
 # Clone repositories
