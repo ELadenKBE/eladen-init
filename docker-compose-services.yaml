@@ -23,33 +23,6 @@ services:
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
     container_name: eladen-gateway
 
-  postgres:
-    image: postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: keycloak
-      POSTGRES_USER: ${DB_KEY_CLOACK_USER}
-      POSTGRES_PASSWORD: ${KEYCLOAK_PASSWORD}
-    container_name: postgres-keycloak
-
-  keycloak:
-    image: quay.io/keycloak/keycloak:legacy
-    environment:
-      DB_VENDOR: POSTGRES
-      DB_ADDR: postgres
-      DB_DATABASE: keycloak
-      DB_USER: ${DB_KEY_CLOACK_USER}
-      DB_SCHEMA: public
-      DB_PASSWORD: ${DB_KEY_CLOACK_PASSWORD}
-      KEYCLOAK_USER: ${KEYCLOAK_USER}
-      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
-    ports:
-      - ${KEYCLOAK_PORT}:${KEYCLOAK_PORT}
-    depends_on:
-      - postgres
-    container_name: keycloak
-
   user-identity:
     build:
       context: ./eladen-useridentity-service
